@@ -27,9 +27,10 @@ def setup_twitter():
 
     return tweepy.API(auth)
 
+print('[%s] Status Notifier up and running' % datetime.utcnow().strftime("%x %X"))
 app = create_app(False)
 api = setup_twitter()
-print('Logged in as @%s' % api.me().screen_name)
+print('[%s] Logged in as @%s' % (datetime.utcnow().strftime("%x %X"), api.me().screen_name))
 
 # This is the hook that goes into UptimeRobot
 @app.route('/update', methods=['POST'])
