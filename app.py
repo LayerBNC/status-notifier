@@ -32,11 +32,12 @@ print('Logged in as @%s' % api.me().screen_name)
 # This is the hook that goes into UptimeRobot
 @app.route('/update', methods=['POST'])
 def status_webhook():
-    date_string = datetime.utcnow().strftime("%b %d, %Y %X")
+    date_timestamp = request.json.get('alertDateTime')
     server_name = request.json.get('monitorFriendlyName')
     server_status = request.json.get('alertTypeFriendlyName')
 
-    if server_name and server_status:
+    if server_name and server_status and date_timestamp:
+        date_string = datetime.fromtimestamp(int(date_timestamp)).strftime("%b %d, %Y %X")
         server_status = server_status.lower()
         if server_status == 'down':
             message = '[down] Shortage registered for %s at %s. We are working to get the server back up ASAP. Apologies!' % (server_name, date_string)
