@@ -9,6 +9,8 @@ def create_app(debug=False):
 
     return app
 
+# Setup our Twitter account. If any of these
+# tokens isn't defined, raise an error.
 def setup_twitter():
     if not 'CONSUMER_KEY' in os.environ: raise KeyError('CONSUMER_KEY is not defined')
     if not 'CONSUMER_SECRET' in os.environ: raise KeyError('CONSUMER_SECRET is not defined')
@@ -36,9 +38,14 @@ def status_webhook():
     server_name = request.json.get('monitorFriendlyName')
     server_status = request.json.get('alertTypeFriendlyName')
 
+    # Check if any of the required variables are defined.
+    # If they aren't return HTTP 400
     if server_name and server_status and date_timestamp:
+        # Get the current alert time from the timestamp
+        # that is sent to us.
         date_string = datetime.utcfromtimestamp(int(date_timestamp)).strftime("%b %d, %Y %X")
         server_status = server_status.lower()
+
         if server_status == 'down':
             message = '[down] Shortage registered for %s at %s. We are working to get the server back up ASAP. Apologies!' % (server_name, date_string)
         else:
