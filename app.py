@@ -37,7 +37,7 @@ def status_webhook():
     server_status = request.json.get('alertTypeFriendlyName')
 
     if server_name and server_status and date_timestamp:
-        date_string = datetime.fromtimestamp(int(date_timestamp)).strftime("%b %d, %Y %X")
+        date_string = datetime.utcfromtimestamp(int(date_timestamp)).strftime("%b %d, %Y %X")
         server_status = server_status.lower()
         if server_status == 'down':
             message = '[down] Shortage registered for %s at %s. We are working to get the server back up ASAP. Apologies!' % (server_name, date_string)
