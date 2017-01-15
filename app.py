@@ -1,7 +1,10 @@
-from flask import Flask, request
-from datetime import datetime
-import tweepy
 import os
+from datetime import datetime
+
+from flask import Flask, request
+
+import tweepy
+
 
 def create_app(debug=False):
     app = Flask(__name__)
