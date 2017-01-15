@@ -49,6 +49,10 @@ def status_webhook():
 
     return 'OK'
 
+@app.route('/')
+def hello_world():
+    return '<html><body><h1>It works!</h1></body></html>', 200
+
 if __name__ == '__main__':
     if not 'OPENSHIFT_PYTHON_IP' in os.environ: ip = '127.0.0.1'
     else: ip = os.environ['OPENSHIFT_PYTHON_IP']
